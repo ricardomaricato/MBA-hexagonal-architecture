@@ -1,7 +1,6 @@
-package br.com.fullcycle.hexagonal.application;
+package br.com.fullcycle.hexagonal.application.usecase;
 
 import br.com.fullcycle.hexagonal.application.exception.ValidationException;
-import br.com.fullcycle.hexagonal.application.usecase.CreateCustomerUseCase;
 import br.com.fullcycle.hexagonal.models.Customer;
 import br.com.fullcycle.hexagonal.services.CustomerService;
 import org.junit.jupiter.api.Assertions;
@@ -26,7 +25,7 @@ class CreateCustomerTest {
         final var expectedEmail = "john.doe@gmail.com";
         final var expectedName = "John Doe";
 
-        final var createInput = new CreateCustomerUseCase.Input(expectedCPF, expectedEmail, expectedName);
+        final var input = new CreateCustomerUseCase.Input(expectedCPF, expectedEmail, expectedName);
 
         // when
         final var customerService = Mockito.mock(CustomerService.class);
@@ -39,7 +38,7 @@ class CreateCustomerTest {
         });
 
         final var useCase = new CreateCustomerUseCase(customerService);
-        final var output = useCase.execute(createInput);
+        final var output = useCase.execute(input);
 
         // then
         Assertions.assertNotNull(output.id());
@@ -51,14 +50,13 @@ class CreateCustomerTest {
     @Test
     @DisplayName("Não deve cadastrar um cliente com CPF duplicado")
     void testCreateWithDuplicatedCPFShouldFail() {
-
         // given
         final var expectedCPF = "12345678";
         final var expectedEmail = "john.doe@gmail.com";
         final var expectedName = "John Doe";
         final var expectedError = "Customer already exists";
 
-        final var createInput = new CreateCustomerUseCase.Input(expectedCPF, expectedEmail, expectedName);
+        final var input = new CreateCustomerUseCase.Input(expectedCPF, expectedEmail, expectedName);
 
         final var aCustomer = new Customer();
         aCustomer.setId(UUID.randomUUID().getMostSignificantBits());
@@ -71,7 +69,7 @@ class CreateCustomerTest {
         when(customerService.findByCpf(expectedCPF)).thenReturn(Optional.of(aCustomer));
 
         final var useCase = new CreateCustomerUseCase(customerService);
-        final var actualException = Assertions.assertThrows(ValidationException.class, () -> useCase.execute(createInput));
+        final var actualException = Assertions.assertThrows(ValidationException.class, () -> useCase.execute(input));
 
         // then
         Assertions.assertEquals(expectedError, actualException.getMessage());
@@ -87,7 +85,7 @@ class CreateCustomerTest {
         final var expectedName = "John Doe";
         final var expectedError = "Customer already exists";
 
-        final var createInput = new CreateCustomerUseCase.Input(expectedCPF, expectedEmail, expectedName);
+        final var input = new CreateCustomerUseCase.Input(expectedCPF, expectedEmail, expectedName);
 
         final var aCustomer = new Customer();
         aCustomer.setId(UUID.randomUUID().getMostSignificantBits());
@@ -100,7 +98,7 @@ class CreateCustomerTest {
         when(customerService.findByEmail(expectedEmail)).thenReturn(Optional.of(aCustomer));
 
         final var useCase = new CreateCustomerUseCase(customerService);
-        final var actualException = Assertions.assertThrows(ValidationException.class, () -> useCase.execute(createInput));
+        final var actualException = Assertions.assertThrows(ValidationException.class, () -> useCase.execute(input));
 
         // then
         Assertions.assertEquals(expectedError, actualException.getMessage());
