@@ -1,7 +1,8 @@
 package br.com.fullcycle.hexagonal.controllers;
 
+import br.com.fullcycle.hexagonal.application.exception.ValidationException;
+import br.com.fullcycle.hexagonal.application.usecase.CreateCustomerUseCase;
 import br.com.fullcycle.hexagonal.dtos.CustomerDTO;
-import br.com.fullcycle.hexagonal.models.Customer;
 import br.com.fullcycle.hexagonal.services.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -18,21 +19,14 @@ public class CustomerController {
 
     @PostMapping
     public ResponseEntity<?> create(@RequestBody CustomerDTO dto) {
-        if (customerService.findByCpf(dto.getCpf()).isPresent()) {
-            return ResponseEntity.unprocessableEntity().body("Customer already exists");
-        }
-        if (customerService.findByEmail(dto.getEmail()).isPresent()) {
-            return ResponseEntity.unprocessableEntity().body("Customer already exists");
-        }
-
-        var customer = new Customer();
-        customer.setName(dto.getName());
-        customer.setCpf(dto.getCpf());
-        customer.setEmail(dto.getEmail());
-
-        customer = customerService.save(customer);
-
-        return ResponseEntity.created(URI.create("/customers/" + customer.getId())).body(customer);
+       try {
+           final var useCase = new CreateCustomerUseCase(customerService);
+           final var input = new CreateCustomerUseCase.Input(dto.getCpf(), dto.getEmail(), dto.getName());
+           final var output = useCase.execute(input);
+           return ResponseEntity.created(URI.create("/customers/" + output.id())).body(output);
+       } catch (ValidationException ex) {
+            return ResponseEntity.unprocessableEntity().body(ex.getMessage());
+       }
     }
 
     @GetMapping("/{id}")
