@@ -10,7 +10,7 @@ public class CreateCustomerUseCase
 
     private final CustomerService customerService;
 
-    public CreateCustomerUseCase(CustomerService customerService) {
+    public CreateCustomerUseCase(final CustomerService customerService) {
         this.customerService = customerService;
     }
 

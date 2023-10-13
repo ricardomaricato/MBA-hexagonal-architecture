@@ -10,7 +10,7 @@ public class GetPartnerByIdUseCase
 
     private final PartnerService partnerService;
 
-    public GetPartnerByIdUseCase(PartnerService partnerService) {
+    public GetPartnerByIdUseCase(final PartnerService partnerService) {
         this.partnerService = partnerService;
     }
 

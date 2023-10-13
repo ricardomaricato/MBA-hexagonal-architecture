@@ -10,7 +10,7 @@ public class CreatePartnerUseCase
 
     private final PartnerService partnerService;
 
-    public CreatePartnerUseCase(PartnerService partnerService) {
+    public CreatePartnerUseCase(final PartnerService partnerService) {
         this.partnerService = partnerService;
     }
 
