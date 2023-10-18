@@ -19,7 +19,6 @@ class CreateCustomerTest {
     @Test
     @DisplayName("Deve criar um cliente")
     void testCreateCustomer() {
-
         // given
         final var expectedCPF = "12345678";
         final var expectedEmail = "john.doe@gmail.com";

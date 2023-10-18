@@ -15,7 +15,7 @@ import static org.mockito.Mockito.when;
 class GetCustomerByIdUseCaseTest {
 
     @Test
-    @DisplayName("Deve obter um cliente pod id")
+    @DisplayName("Deve obter um cliente por id")
     void testGetById() {
         // given
         final var expectedID = UUID.randomUUID().getMostSignificantBits();

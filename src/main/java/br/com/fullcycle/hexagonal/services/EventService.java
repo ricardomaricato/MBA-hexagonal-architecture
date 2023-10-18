@@ -14,9 +14,6 @@ import java.util.Optional;
 public class EventService {
 
     @Autowired
-    private CustomerService customerService;
-
-    @Autowired
     private EventRepository eventRepository;
 
     @Autowired
