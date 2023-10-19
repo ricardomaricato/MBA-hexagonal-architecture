@@ -2,33 +2,37 @@ package br.com.fullcycle.hexagonal.infrastructure.graphql;
 
 import br.com.fullcycle.hexagonal.application.usecase.CreateCustomerUseCase;
 import br.com.fullcycle.hexagonal.application.usecase.GetCustomerByIdUseCase;
-import br.com.fullcycle.hexagonal.infrastructure.dtos.CustomerDTO;
-import br.com.fullcycle.hexagonal.infrastructure.services.CustomerService;
+import br.com.fullcycle.hexagonal.infrastructure.dtos.NewCustomerDTO;
 import org.springframework.graphql.data.method.annotation.Argument;
 import org.springframework.graphql.data.method.annotation.MutationMapping;
 import org.springframework.graphql.data.method.annotation.QueryMapping;
 import org.springframework.stereotype.Controller;
 
+import java.util.Objects;
+
 @Controller
 public class CustomerResolver {
 
-    private final CustomerService customerService;
+    private final CreateCustomerUseCase createCustomerUseCase;
+    private final GetCustomerByIdUseCase getCustomerByIdUseCase;
 
-    public CustomerResolver(CustomerService customerService) {
-        this.customerService = customerService;
+    public CustomerResolver(
+            final CreateCustomerUseCase createCustomerUseCase,
+            final GetCustomerByIdUseCase getCustomerByIdUseCase
+    ) {
+        this.createCustomerUseCase = Objects.requireNonNull(createCustomerUseCase);
+        this.getCustomerByIdUseCase = Objects.requireNonNull(getCustomerByIdUseCase);
     }
 
     @MutationMapping
-    public CreateCustomerUseCase.Output createCustomer(@Argument CustomerDTO dto) {
-        final var useCase = new CreateCustomerUseCase(customerService);
-        final var input = new CreateCustomerUseCase.Input(dto.getCpf(), dto.getEmail(), dto.getName());
-        return useCase.execute(input);
+    public CreateCustomerUseCase.Output createCustomer(@Argument NewCustomerDTO dto) {
+        final var input = new CreateCustomerUseCase.Input(dto.cpf(), dto.email(), dto.name());
+        return createCustomerUseCase.execute(input);
     }
 
     @QueryMapping
     public GetCustomerByIdUseCase.Output customerOfId(@Argument Long id) {
-        final var useCase = new GetCustomerByIdUseCase(customerService);
         final var input = new GetCustomerByIdUseCase.Input(id);
-        return useCase.execute(input).orElse(null);
+        return getCustomerByIdUseCase.execute(input).orElse(null);
     }
 }

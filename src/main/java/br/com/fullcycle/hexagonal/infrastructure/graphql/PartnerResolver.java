@@ -2,31 +2,35 @@ package br.com.fullcycle.hexagonal.infrastructure.graphql;
 
 import br.com.fullcycle.hexagonal.application.usecase.CreatePartnerUseCase;
 import br.com.fullcycle.hexagonal.application.usecase.GetPartnerByIdUseCase;
-import br.com.fullcycle.hexagonal.infrastructure.dtos.PartnerDTO;
-import br.com.fullcycle.hexagonal.infrastructure.services.PartnerService;
+import br.com.fullcycle.hexagonal.infrastructure.dtos.NewPartnerDTO;
 import org.springframework.graphql.data.method.annotation.Argument;
 import org.springframework.graphql.data.method.annotation.MutationMapping;
 import org.springframework.graphql.data.method.annotation.QueryMapping;
 
+import java.util.Objects;
+
 public class PartnerResolver {
 
-    private final PartnerService partnerService;
+    private final CreatePartnerUseCase createPartnerUseCase;
+    private final GetPartnerByIdUseCase getPartnerByIdUseCase;
 
-    public PartnerResolver(PartnerService partnerService) {
-        this.partnerService = partnerService;
+    public PartnerResolver(
+            final CreatePartnerUseCase createPartnerUseCase,
+            final GetPartnerByIdUseCase getPartnerByIdUseCase
+    ) {
+        this.createPartnerUseCase = Objects.requireNonNull(createPartnerUseCase);
+        this.getPartnerByIdUseCase = Objects.requireNonNull(getPartnerByIdUseCase);
     }
 
     @MutationMapping
-    public CreatePartnerUseCase.Output createPartner(@Argument PartnerDTO dto) {
-        final var useCase = new CreatePartnerUseCase(partnerService);
-        final var input = new CreatePartnerUseCase.Input(dto.getCnpj(), dto.getEmail(), dto.getName());
-        return useCase.execute(input);
+    public CreatePartnerUseCase.Output createPartner(@Argument NewPartnerDTO dto) {
+        final var input = new CreatePartnerUseCase.Input(dto.cnpj(), dto.email(), dto.name());
+        return createPartnerUseCase.execute(input);
     }
 
     @QueryMapping
     public GetPartnerByIdUseCase.Output partnerOfId(@Argument Long id) {
-        final var useCase = new GetPartnerByIdUseCase(partnerService);
         final var input = new GetPartnerByIdUseCase.Input(id);
-        return useCase.execute(input).orElse(null);
+        return getPartnerByIdUseCase.execute(input).orElse(null);
     }
 }

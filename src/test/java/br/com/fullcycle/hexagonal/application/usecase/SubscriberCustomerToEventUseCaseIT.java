@@ -8,7 +8,6 @@ import br.com.fullcycle.hexagonal.infrastructure.models.Ticket;
 import br.com.fullcycle.hexagonal.infrastructure.models.TicketStatus;
 import br.com.fullcycle.hexagonal.infrastructure.repositories.CustomerRepository;
 import br.com.fullcycle.hexagonal.infrastructure.repositories.EventRepository;
-import io.hypersistence.tsid.TSID;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
@@ -39,10 +38,10 @@ class SubscriberCustomerToEventUseCaseIT extends IntegrationTest {
     void testReserveTicket() {
         // given
         final var customer = createCustomer("4159873000100", "john.coe@gmail.com", "John Coe");
-        final var eventID = UUID.randomUUID().getMostSignificantBits();
-        createEvent(eventID, "Disney", 10);
+        final var event = createEvent("Disney", 10);
 
         final var customerID = customer.getId();
+        final var eventID = event.getId();
 
         final var subscribeInput =
                 new SubscriberCustomerToEventUseCase.Input(customerID, eventID);
@@ -62,11 +61,8 @@ class SubscriberCustomerToEventUseCaseIT extends IntegrationTest {
         // given
         final var expectedError = "Customer not found";
 
-        final var customerID = TSID.fast().toLong();
-        final var eventID = TSID.fast().toLong();
-
         final var subscribeInput =
-                new SubscriberCustomerToEventUseCase.Input(customerID, eventID);
+                new SubscriberCustomerToEventUseCase.Input(Long.MIN_VALUE, Long.MAX_VALUE);
 
         // when
         final var actualException = Assertions.assertThrows(ValidationException.class, () -> useCase.execute(subscribeInput));
@@ -79,14 +75,13 @@ class SubscriberCustomerToEventUseCaseIT extends IntegrationTest {
     @DisplayName("Não deve comprar um ticket de um evento que não existe")
     void testReserveTicketWithoutEvent() {
         // given
-        createCustomer("4159873000100", "john.coe@gmail.com", "John Coe");
+        final var customer = createCustomer("4159873000100", "john.coe@gmail.com", "John Coe");
         final var expectedError = "Event not found";
 
-        final var customerID = TSID.fast().toLong();
-        final var eventID = TSID.fast().toLong();
+        final var customerID = customer.getId();
 
         final var subscribeInput =
-                new SubscriberCustomerToEventUseCase.Input(customerID, eventID);
+                new SubscriberCustomerToEventUseCase.Input(customerID, Long.MIN_VALUE);
 
         // when
         final var actualException = Assertions.assertThrows(ValidationException.class, () -> useCase.execute(subscribeInput));
@@ -100,10 +95,11 @@ class SubscriberCustomerToEventUseCaseIT extends IntegrationTest {
     void testReserveTicketMoreThanOnce() {
         // given
         final var customer = createCustomer("4159873000100", "john.coe@gmail.com", "John Coe");
-        final var eventID = TSID.fast().toLong();
-        final var event = createEvent(eventID, "Disney", 10);
+        final var event = createEvent("Disney", 10);
         final var expectedError = "Email already registered";
+
         final var customerID = customer.getId();
+        final var eventID = event.getId();
 
         createTicket(event, customer);
 
@@ -121,12 +117,12 @@ class SubscriberCustomerToEventUseCaseIT extends IntegrationTest {
     @DisplayName("Um mesmo cliente não deve comprar um evento que não há mais cadeiras")
     void testReserveTicketWithoutSlots() {
         // given
-        createCustomer("4159873000100", "john.coe@gmail.com", "John Coe");
-        final var eventID = TSID.fast().toLong();
-        createEvent(eventID, "Disney", 0);
+        final var customer = createCustomer("4159873000100", "john.coe@gmail.com", "John Coe");
+        final var event = createEvent("Disney", 0);
         final var expectedError = "Event sold out";
 
-        final var customerID = TSID.fast().toLong();
+        final var customerID = customer.getId();
+        final var eventID = event.getId();
 
         final var subscribeInput =
                 new SubscriberCustomerToEventUseCase.Input(customerID, eventID);
@@ -148,9 +144,9 @@ class SubscriberCustomerToEventUseCaseIT extends IntegrationTest {
         return customerRepository.save(aCustomer);
     }
 
-    private Event createEvent(final long eventID, final String name, final int totalSpots) {
+    private Event createEvent(final String name, final int totalSpots) {
         final var aEvent = new Event();
-        aEvent.setId(eventID);
+        aEvent.setId(UUID.randomUUID().getMostSignificantBits());
         aEvent.setName(name);
         aEvent.setTotalSpots(totalSpots);
 

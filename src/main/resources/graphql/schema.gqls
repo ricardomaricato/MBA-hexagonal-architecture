@@ -6,7 +6,9 @@ type Query {
 
 type Mutation {
     createCustomer(input: CustomerInput): Customer!
+    createEvent(input: EventInput): Event!
     createPartner(input: PartnerInput): Partner!
+    subscriberCustomerToEvent(input: SubscribeInput): Subscriber!
 }
 
 type Customer {
@@ -22,6 +24,20 @@ input CustomerInput {
     cpf: String
 }
 
+type Event {
+    id: ID!
+    totalSpots: Int!
+    name: String!
+    partnerId: ID!
+}
+
+input EventInput {
+    date: String
+    totalSpots: Int
+    name: String
+    partnerId: ID
+}
+
 type Partner {
     id: ID!
     name: String
@@ -33,4 +49,15 @@ input PartnerInput {
     name: String
     email: String
     cnpj: String
+}
+
+input Subscriber {
+    eventId: ID!
+    ticketStatus: String!
+    reservationData: String!
+}
+
+input SubscriberInput {
+    customerId: ID
+    eventId: ID
 }
