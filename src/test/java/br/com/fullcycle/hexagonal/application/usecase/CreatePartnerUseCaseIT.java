@@ -1,20 +1,34 @@
 package br.com.fullcycle.hexagonal.application.usecase;
 
+import br.com.fullcycle.hexagonal.IntegrationTest;
 import br.com.fullcycle.hexagonal.application.exception.ValidationException;
 import br.com.fullcycle.hexagonal.infrastructure.models.Partner;
+import br.com.fullcycle.hexagonal.infrastructure.repositories.PartnerRepository;
 import br.com.fullcycle.hexagonal.infrastructure.services.PartnerService;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.Optional;
 import java.util.UUID;
 
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
-class CreatePartnerUseCaseTest {
+class CreatePartnerUseCaseIT extends IntegrationTest {
+
+    @Autowired
+    private CreatePartnerUseCase useCase;
+
+    @Autowired
+    private PartnerRepository partnerRepository;
+
+    @AfterEach
+    void tearDown() {
+        partnerRepository.deleteAll();
+    }
 
     @Test
     @DisplayName("Deve criar um Parceiro")
@@ -27,16 +41,6 @@ class CreatePartnerUseCaseTest {
         final var input = new CreatePartnerUseCase.Input(expectedCnpj, expectedEmail, expectedName);
 
         // when
-        final var partnerService = Mockito.mock(PartnerService.class);
-        when(partnerService.findByCnpj(expectedCnpj)).thenReturn(Optional.empty());
-        when(partnerService.findByEmail(expectedEmail)).thenReturn(Optional.empty());
-        when(partnerService.save(any())).thenAnswer(a -> {
-            var customer = a.getArgument(0, Partner.class);
-            customer.setId(UUID.randomUUID().getMostSignificantBits());
-            return customer;
-        });
-
-        final var useCase = new CreatePartnerUseCase(partnerService);
         final var output = useCase.execute(input);
 
         // then
@@ -55,19 +59,11 @@ class CreatePartnerUseCaseTest {
         final var expectedName = "John Doe";
         final var expectedError = "Partner already exists";
 
+        createPartner(expectedCnpj, expectedEmail, expectedName);
+
         final var input = new CreatePartnerUseCase.Input(expectedCnpj, expectedEmail, expectedName);
 
-        final var aPartner = new Partner();
-        aPartner.setId(UUID.randomUUID().getMostSignificantBits());
-        aPartner.setCnpj(expectedCnpj);
-        aPartner.setEmail(expectedEmail);
-        aPartner.setName(expectedName);
-
         // when
-        final var partnerService = Mockito.mock(PartnerService.class);
-        when(partnerService.findByCnpj(expectedCnpj)).thenReturn(Optional.of(aPartner));
-
-        final var useCase = new CreatePartnerUseCase(partnerService);
         final var actualException = Assertions.assertThrows(ValidationException.class, () -> useCase.execute(input));
 
         // then
@@ -82,6 +78,8 @@ class CreatePartnerUseCaseTest {
         final var expectedEmail = "john.doe@gmail.com";
         final var expectedName = "John Doe";
         final var expectedError = "Partner already exists";
+
+        createPartner("4159873000100", "john.coe@gmail.com", "John Coe");
 
         final var input = new CreatePartnerUseCase.Input(expectedCnpj, expectedEmail, expectedName);
 
@@ -100,5 +98,14 @@ class CreatePartnerUseCaseTest {
 
         // then
         Assertions.assertEquals(expectedError, actualException.getMessage());
+    }
+
+    private Partner createPartner(final String cnpj, final String email, final String name) {
+        final var aPartner = new Partner();
+        aPartner.setCnpj(cnpj);
+        aPartner.setEmail(email);
+        aPartner.setName(name);
+
+        return partnerRepository.save(aPartner);
     }
 }
