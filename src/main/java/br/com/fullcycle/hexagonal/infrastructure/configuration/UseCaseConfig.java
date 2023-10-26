@@ -28,7 +28,8 @@ public class UseCaseConfig {
 
     @Bean
     public CreateCustomerUseCase createCustomerUseCase() {
-        return new CreateCustomerUseCase(customerService);
+        // TODO: fix dependency
+        return new CreateCustomerUseCase(null);
     }
 
     @Bean
@@ -43,7 +44,8 @@ public class UseCaseConfig {
 
     @Bean
     public GetCustomerByIdUseCase getCustomerByIdUseCase() {
-        return new GetCustomerByIdUseCase(customerService);
+        // TODO: fix dependency
+        return new GetCustomerByIdUseCase(null);
     }
 
     @Bean
