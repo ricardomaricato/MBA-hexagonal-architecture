@@ -1,5 +1,8 @@
-package br.com.fullcycle.hexagonal.application.entities;
+package br.com.fullcycle.hexagonal.application.domain.partner;
 
+import br.com.fullcycle.hexagonal.application.domain.person.Cnpj;
+import br.com.fullcycle.hexagonal.application.domain.person.Email;
+import br.com.fullcycle.hexagonal.application.domain.person.Name;
 import br.com.fullcycle.hexagonal.application.exception.ValidationException;
 
 public class Partner {
@@ -15,9 +18,9 @@ public class Partner {
         }
 
         this.partnerId = partnerId;
-        this.name = new Name(name);
-        this.cnpj = new Cnpj(cnpj);
-        this.email = new Email(email);
+        this.setName(name);
+        this.setCnpj(cnpj);
+        this.setEmail(email);
     }
 
     public static Partner newPartner(String name, String cnpj, String email) {
@@ -38,5 +41,17 @@ public class Partner {
 
     public Email email() {
         return email;
+    }
+
+    public void setName(final String name) {
+        this.name = new Name(name);
+    }
+
+    public void setCnpj(final String cnpj) {
+        this.cnpj = new Cnpj(cnpj);
+    }
+
+    public void setEmail(final String email) {
+        this.email = new Email(email);
     }
 }

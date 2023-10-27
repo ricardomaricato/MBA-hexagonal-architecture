@@ -3,7 +3,7 @@ package br.com.fullcycle.hexagonal.application.usecase;
 import br.com.fullcycle.hexagonal.application.UseCase;
 import br.com.fullcycle.hexagonal.application.exception.ValidationException;
 import br.com.fullcycle.hexagonal.application.repositories.PartnerRepository;
-import br.com.fullcycle.hexagonal.application.entities.Partner;
+import br.com.fullcycle.hexagonal.application.domain.partner.Partner;
 
 public class CreatePartnerUseCase
         extends UseCase<CreatePartnerUseCase.Input, CreatePartnerUseCase.Output> {

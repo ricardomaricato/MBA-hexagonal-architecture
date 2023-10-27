@@ -2,7 +2,7 @@ package br.com.fullcycle.hexagonal.application.usecase;
 
 import br.com.fullcycle.hexagonal.application.InMemoryCustomerRepository;
 import br.com.fullcycle.hexagonal.application.exception.ValidationException;
-import br.com.fullcycle.hexagonal.application.entities.Customer;
+import br.com.fullcycle.hexagonal.application.domain.customer.Customer;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

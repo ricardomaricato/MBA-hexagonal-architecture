@@ -1,7 +1,7 @@
 package br.com.fullcycle.hexagonal.infrastructure.graphql;
 
 import br.com.fullcycle.hexagonal.application.usecase.CreateEventUseCase;
-import br.com.fullcycle.hexagonal.application.usecase.SubscriberCustomerToEventUseCase;
+import br.com.fullcycle.hexagonal.application.usecase.SubscribeCustomerToEventUseCase;
 import br.com.fullcycle.hexagonal.infrastructure.dtos.NewEventDTO;
 import br.com.fullcycle.hexagonal.infrastructure.dtos.SubscribeDTO;
 import org.springframework.graphql.data.method.annotation.Argument;
@@ -15,14 +15,14 @@ import java.util.Objects;
 public class EventResolver {
 
     private final CreateEventUseCase createEventUseCase;
-    private final SubscriberCustomerToEventUseCase subscriberCustomerToEventUseCase;
+    private final SubscribeCustomerToEventUseCase subscribeCustomerToEventUseCase;
 
     public EventResolver(
             final CreateEventUseCase createEventUseCase,
-            final SubscriberCustomerToEventUseCase subscriberCustomerToEventUseCase
+            final SubscribeCustomerToEventUseCase subscribeCustomerToEventUseCase
     ) {
         this.createEventUseCase = Objects.requireNonNull(createEventUseCase);
-        this.subscriberCustomerToEventUseCase = Objects.requireNonNull(subscriberCustomerToEventUseCase);
+        this.subscribeCustomerToEventUseCase = Objects.requireNonNull(subscribeCustomerToEventUseCase);
     }
 
     @MutationMapping
@@ -33,8 +33,8 @@ public class EventResolver {
 
     @Transactional
     @MutationMapping
-    public SubscriberCustomerToEventUseCase.Output subscribeCustomerToEvent(@Argument SubscribeDTO dto) {
-        final var input = new SubscriberCustomerToEventUseCase.Input(dto.customerId(), dto.eventId());
-        return subscriberCustomerToEventUseCase.execute(input);
+    public SubscribeCustomerToEventUseCase.Output subscribeCustomerToEvent(@Argument SubscribeDTO dto) {
+        final var input = new SubscribeCustomerToEventUseCase.Input(dto.customerId(), dto.eventId());
+        return subscribeCustomerToEventUseCase.execute(input);
     }
 }

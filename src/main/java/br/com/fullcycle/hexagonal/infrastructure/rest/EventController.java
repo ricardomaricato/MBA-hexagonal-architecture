@@ -2,7 +2,7 @@ package br.com.fullcycle.hexagonal.infrastructure.rest;
 
 import br.com.fullcycle.hexagonal.application.exception.ValidationException;
 import br.com.fullcycle.hexagonal.application.usecase.CreateEventUseCase;
-import br.com.fullcycle.hexagonal.application.usecase.SubscriberCustomerToEventUseCase;
+import br.com.fullcycle.hexagonal.application.usecase.SubscribeCustomerToEventUseCase;
 import br.com.fullcycle.hexagonal.infrastructure.dtos.NewEventDTO;
 import br.com.fullcycle.hexagonal.infrastructure.dtos.SubscribeDTO;
 import org.springframework.http.ResponseEntity;
@@ -19,14 +19,14 @@ import static org.springframework.http.HttpStatus.CREATED;
 public class EventController {
 
     private final CreateEventUseCase createEventUseCase;
-    private final SubscriberCustomerToEventUseCase subscriberCustomerToEventUseCase;
+    private final SubscribeCustomerToEventUseCase subscribeCustomerToEventUseCase;
 
     public EventController(
             final CreateEventUseCase createEventUseCase,
-            final SubscriberCustomerToEventUseCase subscriberCustomerToEventUseCase
+            final SubscribeCustomerToEventUseCase subscribeCustomerToEventUseCase
     ) {
         this.createEventUseCase = Objects.requireNonNull(createEventUseCase);
-        this.subscriberCustomerToEventUseCase = Objects.requireNonNull(subscriberCustomerToEventUseCase);
+        this.subscribeCustomerToEventUseCase = Objects.requireNonNull(subscribeCustomerToEventUseCase);
     }
 
     @PostMapping
@@ -45,8 +45,8 @@ public class EventController {
     @PostMapping(value = "/{id}/subscribe")
     public ResponseEntity<?> subscribe(@PathVariable Long id, @RequestBody SubscribeDTO dto) {
         try {
-            final var input = new SubscriberCustomerToEventUseCase.Input(dto.customerId(), id);
-            final var output = subscriberCustomerToEventUseCase.execute(input);
+            final var input = new SubscribeCustomerToEventUseCase.Input(dto.customerId(), id);
+            final var output = subscribeCustomerToEventUseCase.execute(input);
             return ResponseEntity.ok(output);
         } catch (ValidationException ex) {
             return ResponseEntity.unprocessableEntity().body(ex.getMessage());

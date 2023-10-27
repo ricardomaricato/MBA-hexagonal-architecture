@@ -16,10 +16,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.UUID;
 
-class SubscriberCustomerToEventUseCaseIT extends IntegrationTest {
+class SubscribeCustomerToEventUseCaseIT extends IntegrationTest {
 
     @Autowired
-    private SubscriberCustomerToEventUseCase useCase;
+    private SubscribeCustomerToEventUseCase useCase;
 
     @Autowired
     private CustomerRepository customerRepository;
@@ -44,7 +44,7 @@ class SubscriberCustomerToEventUseCaseIT extends IntegrationTest {
         final var eventID = event.getId();
 
         final var subscribeInput =
-                new SubscriberCustomerToEventUseCase.Input(customerID, eventID);
+                new SubscribeCustomerToEventUseCase.Input(customerID, eventID);
 
         // when
         final var output = useCase.execute(subscribeInput);
@@ -62,7 +62,7 @@ class SubscriberCustomerToEventUseCaseIT extends IntegrationTest {
         final var expectedError = "Customer not found";
 
         final var subscribeInput =
-                new SubscriberCustomerToEventUseCase.Input(Long.MIN_VALUE, Long.MAX_VALUE);
+                new SubscribeCustomerToEventUseCase.Input(Long.MIN_VALUE, Long.MAX_VALUE);
 
         // when
         final var actualException = Assertions.assertThrows(ValidationException.class, () -> useCase.execute(subscribeInput));
@@ -81,7 +81,7 @@ class SubscriberCustomerToEventUseCaseIT extends IntegrationTest {
         final var customerID = customer.getId();
 
         final var subscribeInput =
-                new SubscriberCustomerToEventUseCase.Input(customerID, Long.MIN_VALUE);
+                new SubscribeCustomerToEventUseCase.Input(customerID, Long.MIN_VALUE);
 
         // when
         final var actualException = Assertions.assertThrows(ValidationException.class, () -> useCase.execute(subscribeInput));
@@ -104,7 +104,7 @@ class SubscriberCustomerToEventUseCaseIT extends IntegrationTest {
         createTicket(event, customer);
 
         final var subscribeInput =
-                new SubscriberCustomerToEventUseCase.Input(customerID, eventID);
+                new SubscribeCustomerToEventUseCase.Input(customerID, eventID);
 
         // when
         final var actualException = Assertions.assertThrows(ValidationException.class, () -> useCase.execute(subscribeInput));
@@ -125,7 +125,7 @@ class SubscriberCustomerToEventUseCaseIT extends IntegrationTest {
         final var eventID = event.getId();
 
         final var subscribeInput =
-                new SubscriberCustomerToEventUseCase.Input(customerID, eventID);
+                new SubscribeCustomerToEventUseCase.Input(customerID, eventID);
 
         // when
         final var actualException = Assertions.assertThrows(ValidationException.class, () -> useCase.execute(subscribeInput));

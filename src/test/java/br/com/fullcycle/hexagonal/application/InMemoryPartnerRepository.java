@@ -1,8 +1,8 @@
 package br.com.fullcycle.hexagonal.application;
 
 import br.com.fullcycle.hexagonal.application.repositories.PartnerRepository;
-import br.com.fullcycle.hexagonal.application.entities.Partner;
-import br.com.fullcycle.hexagonal.application.entities.PartnerId;
+import br.com.fullcycle.hexagonal.application.domain.partner.Partner;
+import br.com.fullcycle.hexagonal.application.domain.partner.PartnerId;
 
 import java.util.HashMap;
 import java.util.Map;

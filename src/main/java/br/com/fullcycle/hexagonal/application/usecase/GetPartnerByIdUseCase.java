@@ -2,7 +2,7 @@ package br.com.fullcycle.hexagonal.application.usecase;
 
 import br.com.fullcycle.hexagonal.application.UseCase;
 import br.com.fullcycle.hexagonal.application.repositories.PartnerRepository;
-import br.com.fullcycle.hexagonal.application.entities.PartnerId;
+import br.com.fullcycle.hexagonal.application.domain.partner.PartnerId;
 
 import java.util.Optional;
 
