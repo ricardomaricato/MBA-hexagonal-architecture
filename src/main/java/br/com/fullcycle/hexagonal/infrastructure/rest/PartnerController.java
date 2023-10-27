@@ -28,7 +28,7 @@ public class PartnerController {
     @PostMapping
     public ResponseEntity<?> create(@RequestBody NewPartnerDTO dto) {
         try {
-            final var input = new CreatePartnerUseCase.Input(dto.getCnpj(), dto.getEmail(), dto.getName());
+            final var input = new CreatePartnerUseCase.Input(dto.cnpj(), dto.email(), dto.name());
             final var output = createPartnerUseCase.execute(input);
             return ResponseEntity.created(URI.create("/partners/" + output.id())).body(output);
         } catch (ValidationException ex) {
@@ -37,7 +37,7 @@ public class PartnerController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<?> get(@PathVariable Long id) {
+    public ResponseEntity<?> get(@PathVariable String id) {
         final var input = new GetPartnerByIdUseCase.Input(id);
         return getPartnerByIdUseCase.execute(input)
                 .map(ResponseEntity::ok)

@@ -39,16 +39,16 @@ public class InMemoryCustomerRepository implements CustomerRepository {
     @Override
     public Customer create(Customer customer) {
         this.customers.put(customer.customerId().value().toString(), customer);
-        this.customers.put(customer.cpf(), customer);
-        this.customers.put(customer.email(), customer);
+        this.customers.put(customer.cpf().value(), customer);
+        this.customers.put(customer.email().value(), customer);
         return customer;
     }
 
     @Override
     public Customer update(Customer customer) {
         this.customers.put(customer.customerId().value().toString(), customer);
-        this.customers.put(customer.cpf(), customer);
-        this.customers.put(customer.email(), customer);
+        this.customers.put(customer.cpf().value(), customer);
+        this.customers.put(customer.email().value(), customer);
         return customer;
     }
 }
