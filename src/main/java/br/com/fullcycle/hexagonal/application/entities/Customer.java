@@ -1,4 +1,4 @@
-package br.com.fullcycle.hexagonal.infrastructure.entities;
+package br.com.fullcycle.hexagonal.application.entities;
 
 import br.com.fullcycle.hexagonal.application.exception.ValidationException;
 

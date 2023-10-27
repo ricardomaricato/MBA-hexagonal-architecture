@@ -1,15 +1,15 @@
-package br.com.fullcycle.hexagonal.infrastructure.entities;
+package br.com.fullcycle.hexagonal.application.entities;
 
 import br.com.fullcycle.hexagonal.application.exception.ValidationException;
 
 public class Partner {
 
-    private CustomerId partnerId;
+    private PartnerId partnerId;
     private Name name;
     private Cnpj cnpj;
     private Email email;
 
-    public Partner(final CustomerId partnerId, final String name, final String cnpj, final String email) {
+    public Partner(final PartnerId partnerId, final String name, final String cnpj, final String email) {
         if (partnerId == null) {
             throw new ValidationException("Invalid partnerId for Partner");
         }
@@ -21,10 +21,10 @@ public class Partner {
     }
 
     public static Partner newPartner(String name, String cnpj, String email) {
-        return new Partner(CustomerId.unique(), name, cnpj, email);
+        return new Partner(PartnerId.unique(), name, cnpj, email);
     }
 
-    public CustomerId partnerId() {
+    public PartnerId partnerId() {
         return partnerId;
     }
 

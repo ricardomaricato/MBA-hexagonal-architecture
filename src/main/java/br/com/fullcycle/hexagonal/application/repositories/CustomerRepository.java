@@ -1,7 +1,7 @@
 package br.com.fullcycle.hexagonal.application.repositories;
 
-import br.com.fullcycle.hexagonal.infrastructure.entities.Customer;
-import br.com.fullcycle.hexagonal.infrastructure.entities.CustomerId;
+import br.com.fullcycle.hexagonal.application.entities.Customer;
+import br.com.fullcycle.hexagonal.application.entities.CustomerId;
 
 import java.util.Optional;
 

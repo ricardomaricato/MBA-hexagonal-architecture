@@ -2,7 +2,7 @@ package br.com.fullcycle.hexagonal.application.usecase;
 
 import br.com.fullcycle.hexagonal.application.UseCase;
 import br.com.fullcycle.hexagonal.application.repositories.CustomerRepository;
-import br.com.fullcycle.hexagonal.infrastructure.entities.CustomerId;
+import br.com.fullcycle.hexagonal.application.entities.CustomerId;
 
 import java.util.Objects;
 import java.util.Optional;
@@ -20,7 +20,7 @@ public class GetCustomerByIdUseCase
     public Optional<Output> execute(final Input input) {
         return customerRepository.customerOfId(CustomerId.with(input.id))
                 .map(c -> new Output(
-                        c.customerId().value().toString(),
+                        c.customerId().value(),
                         c.cpf().value(),
                         c.email().value(),
                         c.name().value()

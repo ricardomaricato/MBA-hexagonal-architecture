@@ -3,7 +3,7 @@ package br.com.fullcycle.hexagonal.application.usecase;
 import br.com.fullcycle.hexagonal.application.UseCase;
 import br.com.fullcycle.hexagonal.application.exception.ValidationException;
 import br.com.fullcycle.hexagonal.application.repositories.PartnerRepository;
-import br.com.fullcycle.hexagonal.infrastructure.entities.Partner;
+import br.com.fullcycle.hexagonal.application.entities.Partner;
 
 public class CreatePartnerUseCase
         extends UseCase<CreatePartnerUseCase.Input, CreatePartnerUseCase.Output> {
@@ -26,7 +26,7 @@ public class CreatePartnerUseCase
         var partner = partnerRepository.create(Partner.newPartner(input.name, input.cnpj, input.email));
 
         return new Output(
-                partner.partnerId().value().toString(),
+                partner.partnerId().value(),
                 partner.cnpj().value(),
                 partner.email().value(),
                 partner.name().value()
