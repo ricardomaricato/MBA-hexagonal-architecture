@@ -36,7 +36,7 @@ class GetCustomerByIdUseCaseIT extends IntegrationTest {
         final var expectedID = customer.getId();
 
 
-        final var input = new GetCustomerByIdUseCase.Input(expectedID);
+        final var input = new GetCustomerByIdUseCase.Input(expectedID.toString());
 
         // when
         final var output = useCase.execute(input).get();
@@ -52,7 +52,7 @@ class GetCustomerByIdUseCaseIT extends IntegrationTest {
     @DisplayName("Deve obter vazio ao tentar recuperar um cliente não existente por id")
     void testGetByIdWithInvalidId() {
         // given
-        final var expectedID = UUID.randomUUID().getMostSignificantBits();
+        final var expectedID = UUID.randomUUID().toString();
 
         final var input = new GetCustomerByIdUseCase.Input(expectedID);
 

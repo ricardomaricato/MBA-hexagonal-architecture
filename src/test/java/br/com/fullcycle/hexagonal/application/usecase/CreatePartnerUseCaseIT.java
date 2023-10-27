@@ -1,21 +1,17 @@
 package br.com.fullcycle.hexagonal.application.usecase;
 
 import br.com.fullcycle.hexagonal.IntegrationTest;
+import br.com.fullcycle.hexagonal.application.InMemoryPartnerRepository;
 import br.com.fullcycle.hexagonal.application.exception.ValidationException;
 import br.com.fullcycle.hexagonal.infrastructure.models.Partner;
 import br.com.fullcycle.hexagonal.infrastructure.repositories.PartnerRepository;
-import br.com.fullcycle.hexagonal.infrastructure.services.PartnerService;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import java.util.Optional;
 import java.util.UUID;
-
-import static org.mockito.Mockito.when;
 
 class CreatePartnerUseCaseIT extends IntegrationTest {
 
@@ -90,10 +86,9 @@ class CreatePartnerUseCaseIT extends IntegrationTest {
         aPartner.setName(expectedName);
 
         // when
-        final var partnerService = Mockito.mock(PartnerService.class);
-        when(partnerService.findByEmail(expectedEmail)).thenReturn(Optional.of(aPartner));
+        final var partnerRepository = new InMemoryPartnerRepository();
 
-        final var useCase = new CreatePartnerUseCase(partnerService);
+        final var useCase = new CreatePartnerUseCase(partnerRepository);
         final var actualException = Assertions.assertThrows(ValidationException.class, () -> useCase.execute(input));
 
         // then

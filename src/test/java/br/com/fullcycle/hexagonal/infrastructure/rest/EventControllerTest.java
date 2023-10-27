@@ -60,7 +60,7 @@ class EventControllerTest {
     @DisplayName("Deve criar um evento")
     public void testCreate() throws Exception {
 
-        var event = new NewEventDTO("2021-01-01", "Disney on Ice", 100, disney.getId());
+        var event = new NewEventDTO("2021-01-01", "Disney on Ice", 100, disney.getId().toString());
 
         final var result = this.mvc.perform(
                         MockMvcRequestBuilders.post("/events")
@@ -82,7 +82,7 @@ class EventControllerTest {
     @DisplayName("Deve comprar um ticket de um evento")
     public void testReserveTicket() throws Exception {
 
-        var event = new NewEventDTO("2021-01-01", "Disney on Ice", 100, disney.getId());
+        var event = new NewEventDTO("2021-01-01", "Disney on Ice", 100, disney.getId().toString());
 
         final var createResult = this.mvc.perform(
                         MockMvcRequestBuilders.post("/events")
