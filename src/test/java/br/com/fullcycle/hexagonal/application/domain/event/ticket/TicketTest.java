@@ -22,8 +22,6 @@ class TicketTest {
         final var anEvent =
                 Event.newEvent("Disney on Ice", "2021-01-01", 10, aPartner);
 
-        final var expectedTickets = 1;
-        final var expectedTicketOrder = 1;
         final var expectedTicketStatus = TicketStatus.PENDING;
         final var expectedEventId = anEvent.eventId();
         final var expectedCustomerId = aCustomer.customerId();
