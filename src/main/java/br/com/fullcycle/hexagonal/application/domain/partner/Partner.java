@@ -3,7 +3,7 @@ package br.com.fullcycle.hexagonal.application.domain.partner;
 import br.com.fullcycle.hexagonal.application.domain.person.Cnpj;
 import br.com.fullcycle.hexagonal.application.domain.person.Email;
 import br.com.fullcycle.hexagonal.application.domain.person.Name;
-import br.com.fullcycle.hexagonal.application.exception.ValidationException;
+import br.com.fullcycle.hexagonal.application.exceptions.ValidationException;
 
 public class Partner {
 

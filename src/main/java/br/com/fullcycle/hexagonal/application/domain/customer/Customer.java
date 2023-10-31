@@ -3,7 +3,7 @@ package br.com.fullcycle.hexagonal.application.domain.customer;
 import br.com.fullcycle.hexagonal.application.domain.person.Cpf;
 import br.com.fullcycle.hexagonal.application.domain.person.Email;
 import br.com.fullcycle.hexagonal.application.domain.person.Name;
-import br.com.fullcycle.hexagonal.application.exception.ValidationException;
+import br.com.fullcycle.hexagonal.application.exceptions.ValidationException;
 
 import java.util.Objects;
 

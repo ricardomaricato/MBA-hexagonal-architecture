@@ -1,6 +1,6 @@
 package br.com.fullcycle.hexagonal.application.domain.person;
 
-import br.com.fullcycle.hexagonal.application.exception.ValidationException;
+import br.com.fullcycle.hexagonal.application.exceptions.ValidationException;
 
 public record Name(String value) {
 

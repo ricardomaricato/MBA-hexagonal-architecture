@@ -1,7 +1,7 @@
 package br.com.fullcycle.hexagonal.infrastructure.rest;
 
-import br.com.fullcycle.hexagonal.application.usecase.CreatePartnerUseCase;
-import br.com.fullcycle.hexagonal.application.usecase.GetPartnerByIdUseCase;
+import br.com.fullcycle.hexagonal.application.usecase.partner.CreatePartnerUseCase;
+import br.com.fullcycle.hexagonal.application.usecase.partner.GetPartnerByIdUseCase;
 import br.com.fullcycle.hexagonal.infrastructure.dtos.NewPartnerDTO;
 import br.com.fullcycle.hexagonal.infrastructure.repositories.PartnerRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;

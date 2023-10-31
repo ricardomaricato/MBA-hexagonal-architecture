@@ -2,7 +2,7 @@ package br.com.fullcycle.hexagonal.application.domain.event.ticket;
 
 import br.com.fullcycle.hexagonal.application.domain.customer.CustomerId;
 import br.com.fullcycle.hexagonal.application.domain.event.EventId;
-import br.com.fullcycle.hexagonal.application.exception.ValidationException;
+import br.com.fullcycle.hexagonal.application.exceptions.ValidationException;
 import br.com.fullcycle.hexagonal.infrastructure.models.TicketStatus;
 
 import java.time.Instant;
