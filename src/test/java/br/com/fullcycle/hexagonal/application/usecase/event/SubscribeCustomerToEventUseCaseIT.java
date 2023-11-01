@@ -2,12 +2,11 @@ package br.com.fullcycle.hexagonal.application.usecase.event;
 
 import br.com.fullcycle.hexagonal.IntegrationTest;
 import br.com.fullcycle.hexagonal.application.exceptions.ValidationException;
-import br.com.fullcycle.hexagonal.infrastructure.models.Customer;
-import br.com.fullcycle.hexagonal.infrastructure.models.Event;
-import br.com.fullcycle.hexagonal.infrastructure.models.Ticket;
-import br.com.fullcycle.hexagonal.infrastructure.models.TicketStatus;
-import br.com.fullcycle.hexagonal.infrastructure.repositories.CustomerRepository;
-import br.com.fullcycle.hexagonal.infrastructure.repositories.EventRepository;
+import br.com.fullcycle.hexagonal.infrastructure.jpa.entities.CustomerEntity;
+import br.com.fullcycle.hexagonal.infrastructure.jpa.entities.EventEntity;
+import br.com.fullcycle.hexagonal.infrastructure.jpa.entities.TicketEntity;
+import br.com.fullcycle.hexagonal.infrastructure.jpa.repositories.CustomerJpaRepository;
+import br.com.fullcycle.hexagonal.infrastructure.jpa.repositories.EventJpaRepository;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
@@ -22,10 +21,10 @@ class SubscribeCustomerToEventUseCaseIT extends IntegrationTest {
     private SubscribeCustomerToEventUseCase useCase;
 
     @Autowired
-    private CustomerRepository customerRepository;
+    private CustomerJpaRepository customerRepository;
 
     @Autowired
-    private EventRepository eventRepository;
+    private EventJpaRepository eventRepository;
 
     @AfterEach
     void tearDown() {
@@ -134,8 +133,8 @@ class SubscribeCustomerToEventUseCaseIT extends IntegrationTest {
         Assertions.assertEquals(expectedError, actualException.getMessage());
     }
 
-    private Customer createCustomer(final String cpf, final String email, final String name) {
-        final var aCustomer = new Customer();
+    private CustomerEntity createCustomer(final String cpf, final String email, final String name) {
+        final var aCustomer = new CustomerEntity();
         aCustomer.setId(UUID.randomUUID().getMostSignificantBits());
         aCustomer.setCpf(cpf);
         aCustomer.setEmail(email);
@@ -144,8 +143,8 @@ class SubscribeCustomerToEventUseCaseIT extends IntegrationTest {
         return customerRepository.save(aCustomer);
     }
 
-    private Event createEvent(final String name, final int totalSpots) {
-        final var aEvent = new Event();
+    private EventEntity createEvent(final String name, final int totalSpots) {
+        final var aEvent = new EventEntity();
         aEvent.setId(UUID.randomUUID().getMostSignificantBits());
         aEvent.setName(name);
         aEvent.setTotalSpots(totalSpots);
@@ -153,8 +152,8 @@ class SubscribeCustomerToEventUseCaseIT extends IntegrationTest {
         return eventRepository.save(aEvent);
     }
 
-    private void createTicket(final Event event, final Customer customer) {
-        final var aTicket = new Ticket();
+    private void createTicket(final EventEntity event, final CustomerEntity customer) {
+        final var aTicket = new TicketEntity();
         aTicket.setEvent(event);
         aTicket.setCustomer(customer);
         event.getTickets().add(aTicket);

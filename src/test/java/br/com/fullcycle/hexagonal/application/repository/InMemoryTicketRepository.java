@@ -11,9 +11,10 @@ import java.util.Optional;
 
 public class InMemoryTicketRepository implements TicketRepository {
 
-    private final Map<String, Ticket> tickets = new HashMap<>();
+    private final Map<String, Ticket> tickets;
 
     public InMemoryTicketRepository() {
+        this.tickets = new HashMap<>();
     }
 
     @Override

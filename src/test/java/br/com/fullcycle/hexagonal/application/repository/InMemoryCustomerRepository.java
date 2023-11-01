@@ -1,8 +1,10 @@
 package br.com.fullcycle.hexagonal.application.repository;
 
-import br.com.fullcycle.hexagonal.application.repositories.CustomerRepository;
 import br.com.fullcycle.hexagonal.application.domain.customer.Customer;
 import br.com.fullcycle.hexagonal.application.domain.customer.CustomerId;
+import br.com.fullcycle.hexagonal.application.domain.person.Cpf;
+import br.com.fullcycle.hexagonal.application.domain.person.Email;
+import br.com.fullcycle.hexagonal.application.repositories.CustomerRepository;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -27,28 +29,35 @@ public class InMemoryCustomerRepository implements CustomerRepository {
     }
 
     @Override
-    public Optional<Customer> customerOfCPF(String cpf) {
-        return Optional.ofNullable(this.customers.get(Objects.requireNonNull(cpf)));
+    public Optional<Customer> customerOfCPF(Cpf cpf) {
+        return Optional.ofNullable(this.customersByCPF.get(cpf.value()));
     }
 
     @Override
-    public Optional<Customer> customerOfEmail(String email) {
-        return Optional.ofNullable(this.customers.get(Objects.requireNonNull(email)));
+    public Optional<Customer> customerOfEmail(Email email) {
+        return Optional.ofNullable(this.customersByEmail.get(email.value()));
     }
 
     @Override
     public Customer create(Customer customer) {
         this.customers.put(customer.customerId().value().toString(), customer);
-        this.customers.put(customer.cpf().value(), customer);
-        this.customers.put(customer.email().value(), customer);
+        this.customersByCPF.put(customer.cpf().value(), customer);
+        this.customersByEmail.put(customer.email().value(), customer);
         return customer;
     }
 
     @Override
     public Customer update(Customer customer) {
         this.customers.put(customer.customerId().value().toString(), customer);
-        this.customers.put(customer.cpf().value(), customer);
-        this.customers.put(customer.email().value(), customer);
+        this.customersByCPF.put(customer.cpf().value(), customer);
+        this.customersByEmail.put(customer.email().value(), customer);
         return customer;
+    }
+
+    @Override
+    public void deleteAll() {
+        this.customers.clear();
+        this.customersByCPF.clear();
+        this.customersByEmail.clear();
     }
 }

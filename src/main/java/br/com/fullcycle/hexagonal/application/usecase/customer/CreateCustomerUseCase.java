@@ -1,9 +1,11 @@
 package br.com.fullcycle.hexagonal.application.usecase.customer;
 
 import br.com.fullcycle.hexagonal.application.UseCase;
+import br.com.fullcycle.hexagonal.application.domain.customer.Customer;
+import br.com.fullcycle.hexagonal.application.domain.person.Cpf;
+import br.com.fullcycle.hexagonal.application.domain.person.Email;
 import br.com.fullcycle.hexagonal.application.exceptions.ValidationException;
 import br.com.fullcycle.hexagonal.application.repositories.CustomerRepository;
-import br.com.fullcycle.hexagonal.application.domain.customer.Customer;
 
 public class CreateCustomerUseCase
         extends UseCase<CreateCustomerUseCase.Input, CreateCustomerUseCase.Output> {
@@ -16,10 +18,10 @@ public class CreateCustomerUseCase
 
     @Override
     public Output execute(final Input input) {
-        if (customerRepository.customerOfCPF(input.cpf).isPresent()) {
+        if (customerRepository.customerOfCPF(new Cpf(input.cpf)).isPresent()) {
             throw new ValidationException("Customer already exists");
         }
-        if (customerRepository.customerOfEmail(input.email).isPresent()) {
+        if (customerRepository.customerOfEmail(new Email(input.email)).isPresent()) {
             throw new ValidationException("Customer already exists");
         }
 

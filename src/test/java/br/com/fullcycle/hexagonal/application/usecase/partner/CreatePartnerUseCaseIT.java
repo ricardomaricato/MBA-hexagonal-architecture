@@ -3,8 +3,8 @@ package br.com.fullcycle.hexagonal.application.usecase.partner;
 import br.com.fullcycle.hexagonal.IntegrationTest;
 import br.com.fullcycle.hexagonal.application.repository.InMemoryPartnerRepository;
 import br.com.fullcycle.hexagonal.application.exceptions.ValidationException;
-import br.com.fullcycle.hexagonal.infrastructure.models.Partner;
-import br.com.fullcycle.hexagonal.infrastructure.repositories.PartnerRepository;
+import br.com.fullcycle.hexagonal.infrastructure.jpa.entities.PartnerEntity;
+import br.com.fullcycle.hexagonal.infrastructure.jpa.repositories.PartnerJpaRepository;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
@@ -19,7 +19,7 @@ class CreatePartnerUseCaseIT extends IntegrationTest {
     private CreatePartnerUseCase useCase;
 
     @Autowired
-    private PartnerRepository partnerRepository;
+    private PartnerJpaRepository partnerRepository;
 
     @AfterEach
     void tearDown() {
@@ -79,7 +79,7 @@ class CreatePartnerUseCaseIT extends IntegrationTest {
 
         final var input = new CreatePartnerUseCase.Input(expectedCnpj, expectedEmail, expectedName);
 
-        final var aPartner = new Partner();
+        final var aPartner = new PartnerEntity();
         aPartner.setId(UUID.randomUUID().getMostSignificantBits());
         aPartner.setCnpj(expectedCnpj);
         aPartner.setEmail(expectedEmail);
@@ -95,8 +95,8 @@ class CreatePartnerUseCaseIT extends IntegrationTest {
         Assertions.assertEquals(expectedError, actualException.getMessage());
     }
 
-    private Partner createPartner(final String cnpj, final String email, final String name) {
-        final var aPartner = new Partner();
+    private PartnerEntity createPartner(final String cnpj, final String email, final String name) {
+        final var aPartner = new PartnerEntity();
         aPartner.setCnpj(cnpj);
         aPartner.setEmail(email);
         aPartner.setName(name);

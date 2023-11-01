@@ -1,9 +1,8 @@
 package br.com.fullcycle.hexagonal.application.usecase.partner;
 
 import br.com.fullcycle.hexagonal.IntegrationTest;
-import br.com.fullcycle.hexagonal.application.usecase.partner.GetPartnerByIdUseCase;
-import br.com.fullcycle.hexagonal.infrastructure.models.Partner;
-import br.com.fullcycle.hexagonal.infrastructure.repositories.PartnerRepository;
+import br.com.fullcycle.hexagonal.infrastructure.jpa.entities.PartnerEntity;
+import br.com.fullcycle.hexagonal.infrastructure.jpa.repositories.PartnerJpaRepository;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
@@ -18,7 +17,7 @@ class GetPartnerByIdUseCaseIT extends IntegrationTest {
     private GetPartnerByIdUseCase useCase;
 
     @Autowired
-    private PartnerRepository partnerRepository;
+    private PartnerJpaRepository partnerRepository;
 
     @AfterEach
     void tearDown() {
@@ -62,8 +61,8 @@ class GetPartnerByIdUseCaseIT extends IntegrationTest {
         Assertions.assertTrue(output.isEmpty());
     }
 
-    private Partner createPartner(final String cnpj, final String email, final String name) {
-        final var aPartner = new Partner();
+    private PartnerEntity createPartner(final String cnpj, final String email, final String name) {
+        final var aPartner = new PartnerEntity();
         aPartner.setCnpj(cnpj);
         aPartner.setEmail(email);
         aPartner.setName(name);

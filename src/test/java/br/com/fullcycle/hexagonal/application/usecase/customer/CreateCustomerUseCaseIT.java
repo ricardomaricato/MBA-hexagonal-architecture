@@ -2,8 +2,8 @@ package br.com.fullcycle.hexagonal.application.usecase.customer;
 
 import br.com.fullcycle.hexagonal.IntegrationTest;
 import br.com.fullcycle.hexagonal.application.exceptions.ValidationException;
-import br.com.fullcycle.hexagonal.infrastructure.models.Customer;
-import br.com.fullcycle.hexagonal.infrastructure.repositories.CustomerRepository;
+import br.com.fullcycle.hexagonal.infrastructure.jpa.entities.CustomerEntity;
+import br.com.fullcycle.hexagonal.infrastructure.jpa.repositories.CustomerJpaRepository;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
@@ -18,7 +18,7 @@ class CreateCustomerUseCaseIT extends IntegrationTest {
     private CreateCustomerUseCase useCase;
 
     @Autowired
-    private CustomerRepository customerRepository;
+    private CustomerJpaRepository customerRepository;
 
     @AfterEach
     void tearDown() {
@@ -86,8 +86,8 @@ class CreateCustomerUseCaseIT extends IntegrationTest {
         Assertions.assertEquals(expectedError, actualException.getMessage());
     }
 
-    private Customer createCustomer(final String cpf, final String email, final String name) {
-        final var aCustomer = new Customer();
+    private CustomerEntity createCustomer(final String cpf, final String email, final String name) {
+        final var aCustomer = new CustomerEntity();
         aCustomer.setId(UUID.randomUUID().getMostSignificantBits());
         aCustomer.setCpf(cpf);
         aCustomer.setEmail(email);

@@ -5,9 +5,11 @@ import br.com.fullcycle.hexagonal.application.domain.person.Email;
 import br.com.fullcycle.hexagonal.application.domain.person.Name;
 import br.com.fullcycle.hexagonal.application.exceptions.ValidationException;
 
+import java.util.Objects;
+
 public class Partner {
 
-    private PartnerId partnerId;
+    private final PartnerId partnerId;
     private Name name;
     private Cnpj cnpj;
     private Email email;
@@ -43,15 +45,28 @@ public class Partner {
         return email;
     }
 
-    public void setName(final String name) {
-        this.name = new Name(name);
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Partner partner = (Partner) o;
+        return Objects.equals(partnerId, partner.partnerId);
     }
 
-    public void setCnpj(final String cnpj) {
+    @Override
+    public int hashCode() {
+        return Objects.hash(partnerId);
+    }
+
+    private void setCnpj(final String cnpj) {
         this.cnpj = new Cnpj(cnpj);
     }
 
-    public void setEmail(final String email) {
+    private void setEmail(final String email) {
         this.email = new Email(email);
+    }
+
+    private void setName(final String name) {
+        this.name = new Name(name);
     }
 }
