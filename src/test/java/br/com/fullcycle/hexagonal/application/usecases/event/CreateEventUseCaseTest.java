@@ -1,4 +1,4 @@
-package br.com.fullcycle.hexagonal.application.usecase.event;
+package br.com.fullcycle.hexagonal.application.usecases.event;
 
 import br.com.fullcycle.hexagonal.application.repository.InMemoryEventRepository;
 import br.com.fullcycle.hexagonal.application.repository.InMemoryPartnerRepository;

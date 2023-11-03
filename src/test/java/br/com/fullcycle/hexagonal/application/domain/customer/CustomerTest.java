@@ -5,11 +5,11 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-class CustomerTest {
+public class CustomerTest {
 
     @Test
     @DisplayName("Deve instanciar um cliente")
-    void testCreateCustomer() {
+    public void testCreateCustomer() {
         // given
         final var expectedCPF = "123.456.789-01";
         final var expectedEmail = "john.doe@gmail.com";
@@ -27,7 +27,7 @@ class CustomerTest {
 
     @Test
     @DisplayName("Não deve instanciar um cliente com CPF invalido")
-    void testCreateCustomerWithInvalidCPF() {
+    public void testCreateCustomerWithInvalidCPF() {
         // given
         final var expectedError = "Invalid value for Cpf";
 
@@ -43,7 +43,7 @@ class CustomerTest {
 
     @Test
     @DisplayName("Não deve instanciar um cliente com nome invalido")
-    void testCreateCustomerWithInvalidName() {
+    public void testCreateCustomerWithInvalidName() {
         // given
         final var expectedError = "Invalid value for Name";
 
@@ -60,7 +60,7 @@ class CustomerTest {
 
     @Test
     @DisplayName("Não deve instanciar um cliente com email invalido")
-    void testCreateCustomerWithInvalidEmail() {
+    public void testCreateCustomerWithInvalidEmail() {
         // given
         final var expectedError = "Invalid value for Email";
 

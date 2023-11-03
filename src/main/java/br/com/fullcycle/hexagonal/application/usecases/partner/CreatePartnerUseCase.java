@@ -1,6 +1,6 @@
-package br.com.fullcycle.hexagonal.application.usecase.partner;
+package br.com.fullcycle.hexagonal.application.usecases.partner;
 
-import br.com.fullcycle.hexagonal.application.UseCase;
+import br.com.fullcycle.hexagonal.application.usecases.UseCase;
 import br.com.fullcycle.hexagonal.application.domain.person.Cnpj;
 import br.com.fullcycle.hexagonal.application.domain.person.Email;
 import br.com.fullcycle.hexagonal.application.exceptions.ValidationException;

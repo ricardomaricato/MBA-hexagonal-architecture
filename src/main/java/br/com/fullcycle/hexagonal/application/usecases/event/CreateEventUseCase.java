@@ -1,6 +1,6 @@
-package br.com.fullcycle.hexagonal.application.usecase.event;
+package br.com.fullcycle.hexagonal.application.usecases.event;
 
-import br.com.fullcycle.hexagonal.application.UseCase;
+import br.com.fullcycle.hexagonal.application.usecases.UseCase;
 import br.com.fullcycle.hexagonal.application.domain.event.Event;
 import br.com.fullcycle.hexagonal.application.domain.partner.PartnerId;
 import br.com.fullcycle.hexagonal.application.exceptions.ValidationException;

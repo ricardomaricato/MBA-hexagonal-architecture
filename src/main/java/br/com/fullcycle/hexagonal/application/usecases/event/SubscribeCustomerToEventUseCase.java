@@ -1,6 +1,6 @@
-package br.com.fullcycle.hexagonal.application.usecase.event;
+package br.com.fullcycle.hexagonal.application.usecases.event;
 
-import br.com.fullcycle.hexagonal.application.UseCase;
+import br.com.fullcycle.hexagonal.application.usecases.UseCase;
 import br.com.fullcycle.hexagonal.application.domain.customer.CustomerId;
 import br.com.fullcycle.hexagonal.application.domain.event.EventId;
 import br.com.fullcycle.hexagonal.application.domain.event.ticket.Ticket;
@@ -12,8 +12,7 @@ import br.com.fullcycle.hexagonal.application.repositories.TicketRepository;
 import java.time.Instant;
 import java.util.Objects;
 
-public class SubscribeCustomerToEventUseCase
-        extends UseCase<SubscribeCustomerToEventUseCase.Input, SubscribeCustomerToEventUseCase.Output> {
+public class SubscribeCustomerToEventUseCase extends UseCase<SubscribeCustomerToEventUseCase.Input, SubscribeCustomerToEventUseCase.Output> {
 
     private final CustomerRepository customerRepository;
     private final EventRepository eventRepository;

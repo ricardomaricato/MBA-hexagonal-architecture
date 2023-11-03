@@ -1,4 +1,4 @@
-package br.com.fullcycle.hexagonal.application.usecase.partner;
+package br.com.fullcycle.hexagonal.application.usecases.partner;
 
 import br.com.fullcycle.hexagonal.application.domain.partner.Partner;
 import br.com.fullcycle.hexagonal.application.repository.InMemoryPartnerRepository;
@@ -12,9 +12,9 @@ class GetPartnerByIdUseCaseTest {
 
     @Test
     @DisplayName("Deve obter um parceiro por id")
-    void testGetById() {
+    public void testGetById() {
         // given
-        final var expectedCNPJ = "41.565.839/0001-00";
+        final var expectedCNPJ = "41.536.538/0001-00";
         final var expectedEmail = "john.doe@gmail.com";
         final var expectedName = "John Doe";
 
@@ -24,6 +24,7 @@ class GetPartnerByIdUseCaseTest {
         partnerRepository.create(aPartner);
 
         final var expectedID = aPartner.partnerId().value().toString();
+
         final var input = new GetPartnerByIdUseCase.Input(expectedID);
 
         // when
@@ -39,7 +40,7 @@ class GetPartnerByIdUseCaseTest {
 
     @Test
     @DisplayName("Deve obter vazio ao tentar recuperar um parceiro não existente por id")
-    void testGetByIdWithInvalidId() {
+    public void testGetByIdWIthInvalidId() {
         // given
         final var expectedID = UUID.randomUUID().toString();
 
@@ -53,5 +54,4 @@ class GetPartnerByIdUseCaseTest {
         // then
         Assertions.assertTrue(output.isEmpty());
     }
-
 }

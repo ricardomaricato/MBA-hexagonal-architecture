@@ -1,9 +1,10 @@
-package br.com.fullcycle.hexagonal.application.usecase.event;
+package br.com.fullcycle.hexagonal.application.usecases.event;
 
 import br.com.fullcycle.hexagonal.application.domain.customer.Customer;
 import br.com.fullcycle.hexagonal.application.domain.customer.CustomerId;
 import br.com.fullcycle.hexagonal.application.domain.event.Event;
 import br.com.fullcycle.hexagonal.application.domain.event.EventId;
+import br.com.fullcycle.hexagonal.application.domain.event.ticket.TicketStatus;
 import br.com.fullcycle.hexagonal.application.domain.partner.Partner;
 import br.com.fullcycle.hexagonal.application.exceptions.ValidationException;
 import br.com.fullcycle.hexagonal.application.repository.InMemoryCustomerRepository;
@@ -17,7 +18,7 @@ class SubscribeCustomerToEventUseCaseTest {
 
     @Test
     @DisplayName("Deve comprar um ticket de um evento")
-    void testReserveTicket() {
+    void testReserveTicket() throws Exception {
         // given
         final var expectedTicketsSize = 1;
 
@@ -53,8 +54,8 @@ class SubscribeCustomerToEventUseCaseTest {
     }
 
     @Test
-    @DisplayName("Não deve comprar um ticket de um cliente não existente")
-    void testReserveTicketWithoutCustomer() {
+    @DisplayName("Não deve comprar um ticket com um cliente não existente")
+    void testReserveTicketWithoutCustomer() throws Exception {
         // given
         final var expectedError = "Customer not found";
 
@@ -83,7 +84,7 @@ class SubscribeCustomerToEventUseCaseTest {
 
     @Test
     @DisplayName("Não deve comprar um ticket de um evento que não existe")
-    void testReserveTicketWithoutEvent() {
+    void testReserveTicketWithoutEvent() throws Exception {
         // given
         final var expectedError = "Event not found";
 
@@ -110,8 +111,8 @@ class SubscribeCustomerToEventUseCaseTest {
     }
 
     @Test
-    @DisplayName("Um mesmo cliente não deve comprar mais de um ticket por evento")
-    void testReserveTicketMoreThanOnce() {
+    @DisplayName("Um mesmo cliente não pode comprar mais de um ticket por evento")
+    void testReserveTicketMoreThanOnce() throws Exception {
         // given
         final var expectedError = "Email already registered";
 
@@ -144,8 +145,8 @@ class SubscribeCustomerToEventUseCaseTest {
     }
 
     @Test
-    @DisplayName("Um mesmo cliente não deve comprar de um evento que não há mais cadeiras")
-    void testReserveTicketWithoutSlots() {
+    @DisplayName("Um mesmo cliente não pode comprar de um evento que não há mais cadeiras")
+    void testReserveTicketWithoutSlots() throws Exception {
         // given
         final var expectedError = "Event sold out";
 

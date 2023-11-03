@@ -1,6 +1,6 @@
-package br.com.fullcycle.hexagonal.application.usecase.customer;
+package br.com.fullcycle.hexagonal.application.usecases.customer;
 
-import br.com.fullcycle.hexagonal.application.UseCase;
+import br.com.fullcycle.hexagonal.application.usecases.UseCase;
 import br.com.fullcycle.hexagonal.application.domain.customer.Customer;
 import br.com.fullcycle.hexagonal.application.domain.person.Cpf;
 import br.com.fullcycle.hexagonal.application.domain.person.Email;

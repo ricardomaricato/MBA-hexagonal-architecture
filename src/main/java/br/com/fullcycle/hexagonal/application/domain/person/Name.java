@@ -6,7 +6,7 @@ public record Name(String value) {
 
     public Name {
         if (value == null) {
-            throw new ValidationException("Invalid value for name");
+            throw new ValidationException("Invalid value for Name");
         }
     }
 }

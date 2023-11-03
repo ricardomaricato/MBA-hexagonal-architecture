@@ -1,4 +1,4 @@
-package br.com.fullcycle.hexagonal.application.usecase.customer;
+package br.com.fullcycle.hexagonal.application.usecases.customer;
 
 import br.com.fullcycle.hexagonal.application.repository.InMemoryCustomerRepository;
 import br.com.fullcycle.hexagonal.application.exceptions.ValidationException;
